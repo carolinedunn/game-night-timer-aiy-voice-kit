@@ -46,7 +46,8 @@ echo "dtoverlay=googlevoicehat-soundcard" | sudo tee -a /boot/config.txt
 sudo reboot
 ```
 
-### 5. Test the speaker
+### 5. Select & Test the speaker
+After the reboot, select the aiy voice hat speaker by right-clicking the volume button and selecting the speaker
 ```bash
 speaker-test -t sine -f 1000 -l 1
 ```
@@ -59,7 +60,7 @@ sudo apt install -y git python3-pip python3-rpi.gpio python3-smbus python3-gpioz
 ### 7. Install the AIY Python library
 ```bash
 git clone https://github.com/google/aiyprojects-raspbian.git
-cd aiyprojects-raspbian/src
+cd aiyprojects-raspbian
 sudo pip3 install .
 ```
 
