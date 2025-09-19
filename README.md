@@ -78,7 +78,7 @@ See tutorial video
 ```bash
 sudo usermod -a -G audio <your-username>
 sudo mkdir -p /opt/aiy
-sudo cp ~/Documents/AIY/timer-aiy.py /opt/aiy/
+sudo cp ~/game-night-timer-aiy-voice-kit/timer-aiy.py /opt/aiy/
 sudo chmod +x /opt/aiy/timer-aiy.py
 ```
 
@@ -87,7 +87,7 @@ sudo chmod +x /opt/aiy/timer-aiy.py
 sudo nano /etc/systemd/system/aiy-timer.service
 ```
 
-### Paste the following (replace <your-username> with your Pi username):
+### Paste the following (replace <your-username> with your Pi username in 2 places):
 ```bash
 [Unit]
 Description=AIY Two-Player Timer
@@ -121,9 +121,14 @@ WantedBy=multi-user.target
 ### 3. Configure ALSA defaults
 Create /etc/asound.conf so audio services don’t depend on per-user config:
 ```bash
+aplay -l
+```
+
+Note your aiy sound card number. Mine was 1.
+```bash
 sudo tee /etc/asound.conf >/dev/null <<EOF
-defaults.pcm.card 1
-defaults.ctl.card 1
+defaults.pcm.card <your card number>
+defaults.ctl.card <your card number>
 EOF
 ```
 
