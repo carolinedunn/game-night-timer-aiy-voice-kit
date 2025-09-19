@@ -103,9 +103,6 @@ Environment=PYTHONUNBUFFERED=1
 Environment=HOME=/home/<your-username>
 
 ExecStartPre=/bin/sh -c 'for i in $(seq 1 20); do aplay -l | grep -qi "voicehat\|googlevoicehat\|snd_rpi_googlevoicehat" && exit 0; sleep 1; done; echo "AIY sound card not detected"; exit 1'
-ExecStartPre=/usr/bin/amixer -q -c 0 sset Master 85% unmute || /usr/bin/true
-ExecStartPre=/usr/bin/amixer -q -c 0 sset Headphone 85% unmute || /usr/bin/true
-ExecStartPre=/usr/bin/amixer -q -c 0 sset PCM 85% unmute || /usr/bin/true
 
 ExecStart=/usr/bin/python3 /opt/aiy/timer-aiy.py
 Restart=always
@@ -140,8 +137,6 @@ sudo alsactl init || true
 
 ### 4. Test audio
 ```bash
-aplay -l
-aplay -L | sed -n '1,200p'
 sudo -u <your-username> aplay /usr/share/sounds/alsa/Front_Center.wav
 ```
 
