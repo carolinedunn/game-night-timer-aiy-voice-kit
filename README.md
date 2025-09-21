@@ -1,4 +1,4 @@
-# 🕹️ Game Night Timer — Google AIY Voice Kit v1
+# Game Night Timer — Google AIY Voice Kit v1
 
 A DIY **Game Night Buzzer** project built with the **Google AIY Voice Kit v1**.  
 Repurpose the kit’s built-in button, LED, and speaker into a **one-button, chess-clock-style timer** for board games and card games.  
@@ -17,7 +17,7 @@ When time runs out, the speaker plays a buzzer sound and the LED signals timeout
 
 ---
 
-## 🛠️ Requirements
+## Requirements
 - Google AIY Voice Kit v1 (discontinued)  
 - Raspberry Pi 3 (required for the AIY Voice Kit v1)  
 - microSD card (8 GB minimum, flashed with **Raspberry Pi OS Legacy, 32-bit Bullseye**)  
@@ -26,7 +26,7 @@ When time runs out, the speaker plays a buzzer sound and the LED signals timeout
 
 ---
 
-## 📦 Setup Instructions
+## Setup Instructions
 
 ### 1. Assemble the Voice Kit
 Follow the kit’s original assembly guide so the button, LED, and speaker are connected.  
@@ -72,6 +72,12 @@ git clone https://github.com/carolinedunn/game-night-timer-aiy-voice-kit.git
 ### 9. Run the test files
 See tutorial video
 
+### 10. Optional: Record custom audio files
+```bash
+sudo apt-get install audacity
+```
+See tutorial video
+
 ## ▶️ Running the Timer on Boot
 
 ### 1. Prepare environment
@@ -79,7 +85,18 @@ See tutorial video
 sudo usermod -a -G audio <your-username>
 sudo mkdir -p /opt/aiy
 sudo cp ~/game-night-timer-aiy-voice-kit/timer-aiy.py /opt/aiy/
+or
+sudo cp ~/game-night-timer-aiy-voice-kit/timer-aiy-custom-audio-2player.py /opt/aiy/
+or
+sudo cp ~/game-night-timer-aiy-voice-kit/timer-aiy-custom-audio-4player.py /opt/aiy/
+
+sudo cp -r ~/game-night-timer-aiy-voice-kit/audio /opt/aiy/
+
 sudo chmod +x /opt/aiy/timer-aiy.py
+or
+sudo chmod +x /opt/aiy/timer-aiy-custom-audio-2player.py
+or
+sudo chmod +x /opt/aiy/timer-aiy-custom-audio-4player.py
 ```
 
 ### 2. Create a systemd service
@@ -104,7 +121,7 @@ Environment=HOME=/home/<your-username>
 
 ExecStartPre=/bin/sh -c 'for i in $(seq 1 20); do aplay -l | grep -qi "voicehat\|googlevoicehat\|snd_rpi_googlevoicehat" && exit 0; sleep 1; done; echo "AIY sound card not detected"; exit 1'
 
-ExecStart=/usr/bin/python3 /opt/aiy/timer-aiy.py
+ExecStart=/usr/bin/python3 /opt/aiy/timer-aiy.py or /opt/aiy/timer-aiy-custom-audio-2player.py or /opt/aiy/timer-aiy-custom-audio-4player.py
 Restart=always
 RestartSec=2
 StandardOutput=journal
